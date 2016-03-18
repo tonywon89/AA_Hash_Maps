@@ -16,13 +16,17 @@ end
 class LinkedList
 
   include Enumerable
-  
+
   def initialize
     @head = Link.new
     @tail = Link.new
 
     @head.next = @tail
     @tail.prev = @head
+  end
+
+  def to_s
+    map { |link| link.to_s}
   end
 
   def [](i)
@@ -73,7 +77,6 @@ class LinkedList
   end
 
   def remove(key)
-
     link = @tail.prev
 
     until link == @head
@@ -81,6 +84,7 @@ class LinkedList
         next_link = link.next
         next_link.prev = link.prev
         link.prev.next = next_link
+        return true
       end
       link = link.prev
     end
