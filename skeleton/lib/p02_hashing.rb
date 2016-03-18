@@ -14,7 +14,9 @@ end
 
 class String
   def hash
-    self.bytes.hash
+    self.bytes.map do |byte|
+      byte + length.hash
+    end.hash
   end
 end
 
@@ -28,7 +30,7 @@ class Hash
       xor ^= key.to_s.hash + 1 # 1 designates key
       xor ^= value.to_s.hash + 2 # 2 designates value
     end
-  
+
     xor
   end
 end
