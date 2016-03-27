@@ -29,9 +29,13 @@ class DynamicArray
   end
 
   def [](i)
+    return nil if i >= @count
+    @store[i]
+
   end
 
   def []=(i, val)
+    @store[i] = val
   end
 
   def capacity
@@ -42,12 +46,37 @@ class DynamicArray
   end
 
   def push(val)
+    @count += 1
+    new_static = StaticArray.new(@count)
+    new_static[@count - 1] = val
+
+    @store[@count] = val
+
+    i = @count - 1
+    while i > 0
+      new_static[i - 1] = @store[i]
+      i -= 1
+    end
+
+    @store = new_static
   end
 
   def unshift(val)
+    @count += 1
+    new_static = StaticArray.new(@count)
+    new_static[0] = val
+
+    i = 1
+    while i < @count
+      new_static[i] = @store[i - 1]
+      i += 1
+    end
+
+    @store = new_static
   end
 
   def pop
+    @store[@count - 1] = nil
   end
 
   def shift
